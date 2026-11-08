@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { school } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function Contact() {
+  const { t } = useLanguage()
   const [sent, setSent] = useState(false)
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -14,62 +15,56 @@ export function Contact() {
     <>
       <section className="page-hero">
         <div className="container">
-          <p className="eyebrow">Contact</p>
-          <h1>We would love to meet you</h1>
-          <p>
-            Reach admissions, book a tour, or ask a question. This form stays on the frontend —
-            submissions are simulated for this public demo site.
-          </p>
+          <p className="eyebrow">{t.contact.eyebrow}</p>
+          <h1>{t.contact.title}</h1>
+          <p>{t.contact.intro}</p>
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: '1.5rem', paddingBottom: '4rem' }}>
         <div className="container contact-grid">
           <div className="panel">
-            <h3>Visit us</h3>
-            <p>{school.address}</p>
+            <h3>{t.contact.visitTitle}</h3>
+            <p>{t.school.address}</p>
             <p>
-              <a href={`tel:${school.phone.replace(/\s/g, '')}`}>{school.phone}</a>
+              <a href={`tel:${t.school.phone.replace(/\s/g, '')}`}>{t.school.phone}</a>
             </p>
             <p>
-              <a href={`mailto:${school.email}`}>{school.email}</a>
+              <a href={`mailto:${t.school.email}`}>{t.school.email}</a>
             </p>
-            <p className="muted">Sunday–Thursday · 8:00–15:30 (Jordan time)</p>
+            <p className="muted">{t.contact.hours}</p>
           </div>
 
           <div className="panel">
-            <h3>Send a message</h3>
+            <h3>{t.contact.formTitle}</h3>
             {sent ? (
-              <p>
-                Thank you — your inquiry is ready to share with admissions. For a live production
-                workflow, connect this frontend form to your preferred email or form service.
-              </p>
+              <p>{t.contact.thanks}</p>
             ) : (
               <form className="contact-form" onSubmit={onSubmit}>
                 <label>
-                  Full name
+                  {t.contact.fullName}
                   <input name="name" required autoComplete="name" />
                 </label>
                 <label>
-                  Email
+                  {t.contact.email}
                   <input name="email" type="email" required autoComplete="email" />
                 </label>
                 <label>
-                  Interest
+                  {t.contact.interest}
                   <select name="interest" defaultValue="tour">
-                    <option value="tour">Campus tour</option>
-                    <option value="admissions">Admissions</option>
-                    <option value="general">General question</option>
+                    <option value="tour">{t.contact.interestTour}</option>
+                    <option value="admissions">{t.contact.interestAdmissions}</option>
+                    <option value="general">{t.contact.interestGeneral}</option>
                   </select>
                 </label>
                 <label>
-                  Message
+                  {t.contact.message}
                   <textarea name="message" required />
                 </label>
                 <button className="btn btn-primary" type="submit">
-                  Submit inquiry
+                  {t.contact.submit}
                 </button>
-                <p className="form-note">Frontend only — no backend or login required.</p>
+                <p className="form-note">{t.contact.formNote}</p>
               </form>
             )}
           </div>

@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom'
-import { dashboardCards } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function DashboardCards() {
+  const { t } = useLanguage()
+
   return (
     <section className="section" aria-labelledby="dashboard-heading">
       <div className="container">
         <div className="section-head">
-          <p className="eyebrow">At a glance</p>
-          <h2 id="dashboard-heading">A clear view of school life</h2>
-          <p>
-            Key pathways for families — academics, admissions, campus culture, and our global
-            Amman community — in one responsive dashboard.
-          </p>
+          <p className="eyebrow">{t.dashboard.eyebrow}</p>
+          <h2 id="dashboard-heading">{t.dashboard.title}</h2>
+          <p>{t.dashboard.intro}</p>
         </div>
         <div className="card-grid four">
-          {dashboardCards.map((card) => (
+          {t.dashboard.cards.map((card) => (
             <Link key={card.title} to={card.to} className="dash-card">
               <div>
                 <span className="metric">{card.metric}</span>
@@ -22,7 +21,7 @@ export function DashboardCards() {
               </div>
               <h3>{card.title}</h3>
               <p>{card.body}</p>
-              <span className="linkish">View section →</span>
+              <span className="linkish">{t.common.viewSection}</span>
             </Link>
           ))}
         </div>

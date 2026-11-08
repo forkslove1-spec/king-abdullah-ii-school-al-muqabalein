@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { SLIDE_MS, school, slides } from '../data/content'
+import { SLIDE_MS, slideMedia } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function HeroSlideshow() {
+  const { t } = useLanguage()
   const [index, setIndex] = useState(0)
   const [videoBlocked, setVideoBlocked] = useState(false)
   const [userPlayed, setUserPlayed] = useState(false)
@@ -14,13 +16,13 @@ export function HeroSlideshow() {
   useEffect(() => {
     if (reduceMotion) return
     const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % slides.length)
+      setIndex((current) => (current + 1) % slideMedia.length)
     }, SLIDE_MS)
     return () => window.clearInterval(timer)
   }, [reduceMotion])
 
   useEffect(() => {
-    const slide = slides[index]
+    const slide = slideMedia[index]
     if (slide.type !== 'video') {
       setVideoBlocked(false)
       setUserPlayed(false)
@@ -72,75 +74,81 @@ export function HeroSlideshow() {
   }
 
   return (
-    <section className="hero" aria-label="Campus showcase slideshow">
+    <section className="hero" aria-label={t.a11y.slideshow}>
       <div className="hero-media" aria-hidden="true">
-        {slides.map((slide, i) => (
-          <div key={slide.id} className={`hero-slide${i === index ? ' active' : ''}`}>
-            {slide.type === 'image' ? (
-              <img
-                src={slide.src}
-                alt=""
-                loading={i === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-              />
-            ) : (
-              <>
+        {slideMedia.map((slide, i) => {
+          const copy = t.slides[i]
+          return (
+            <div key={slide.id} className={`hero-slide${i === index ? ' active' : ''}`}>
+              {slide.type === 'image' ? (
                 <img
-                  src={slide.poster}
+                  src={slide.src}
                   alt=""
                   loading={i === 0 ? 'eager' : 'lazy'}
                   decoding="async"
                 />
-                <video
-                  ref={i === index ? videoRef : undefined}
-                  src={slide.src}
-                  poster={slide.poster}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  style={{
-                    opacity: i === index && !videoBlocked ? 1 : 0,
-                    transition: 'opacity 0.4s ease',
-                  }}
-                />
-                {i === index && videoBlocked && !userPlayed ? (
-                  <div className="video-fallback">
-                    <button type="button" onClick={() => void playVideo()}>
-                      Play campus video
-                    </button>
-                  </div>
-                ) : null}
-              </>
-            )}
-          </div>
-        ))}
+              ) : (
+                <>
+                  <img
+                    src={slide.poster}
+                    alt=""
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                  <video
+                    ref={i === index ? videoRef : undefined}
+                    src={slide.src}
+                    poster={slide.poster}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    style={{
+                      opacity: i === index && !videoBlocked ? 1 : 0,
+                      transition: 'opacity 0.4s ease',
+                    }}
+                  />
+                  {i === index && videoBlocked && !userPlayed ? (
+                    <div className="video-fallback">
+                      <button type="button" onClick={() => void playVideo()}>
+                        {t.hero.playVideo}
+                      </button>
+                    </div>
+                  ) : null}
+                </>
+              )}
+              <span className="visually-hidden">{copy.alt}</span>
+            </div>
+          )
+        })}
       </div>
       <div className="hero-overlay" />
 
       <div className="container hero-content">
         <p className="eyebrow" style={{ color: 'var(--accent)' }}>
-          {school.city}
+          {t.school.city}
         </p>
-        <h1 className="hero-brand">{school.name}</h1>
-        <p className="hero-copy">{school.tagline} A publicly accessible campus experience for families in Jordan and around the world.</p>
+        <h1 className="hero-brand">{t.school.name}</h1>
+        <p className="hero-copy">
+          {t.school.tagline} {t.hero.copy}
+        </p>
         <div className="hero-actions">
           <Link className="btn btn-primary" to="/admissions">
-            Start admissions
+            {t.hero.ctaAdmissions}
           </Link>
           <Link className="btn btn-ghost" to="/campus">
-            Explore campus
+            {t.hero.ctaCampus}
           </Link>
         </div>
         <div className="hero-meta">
-          <span className="slide-caption">{slides[index].caption}</span>
-          <div className="slide-dots" role="tablist" aria-label="Slideshow slides">
-            {slides.map((slide, i) => (
+          <span className="slide-caption">{t.slides[index].caption}</span>
+          <div className="slide-dots" role="tablist" aria-label={t.a11y.slides}>
+            {t.slides.map((slide, i) => (
               <button
                 key={slide.id}
                 type="button"
                 className={i === index ? 'active' : undefined}
-                aria-label={`Show slide ${i + 1}: ${slide.caption}`}
+                aria-label={`${i + 1}: ${slide.caption}`}
                 aria-selected={i === index}
                 onClick={() => setIndex(i)}
               />

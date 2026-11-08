@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { navLinks, school } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const onResize = () => {
@@ -18,15 +20,23 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container nav-bar">
-        <NavLink to="/" className="brand" onClick={close} aria-label={`${school.name} home`}>
+        <NavLink
+          to="/"
+          className="brand"
+          onClick={close}
+          aria-label={`${t.school.name} ${t.a11y.home}`}
+        >
           <span className="brand-mark" aria-hidden="true">
-            AC
+            {t.school.mark}
           </span>
-          <span>{school.name}</span>
+          <span className="brand-text">
+            <span className="brand-full">{t.school.name}</span>
+            <span className="brand-short">{t.school.shortName}</span>
+          </span>
         </NavLink>
 
-        <nav className="nav-links" aria-label="Primary">
-          {navLinks.map((link) => (
+        <nav className="nav-links" aria-label={t.a11y.primaryNav}>
+          {t.nav.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
@@ -36,24 +46,28 @@ export function Header() {
               {link.label}
             </NavLink>
           ))}
+          <LanguageSwitcher />
         </nav>
 
-        <button
-          type="button"
-          className="nav-toggle"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-        </button>
+        <div className="nav-actions">
+          <LanguageSwitcher compact />
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? t.a11y.closeMenu : t.a11y.openMenu}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span />
+          </button>
+        </div>
       </div>
 
       <div id="mobile-nav" className={`mobile-panel${open ? ' open' : ''}`}>
         <div className="container">
-          <nav aria-label="Mobile">
-            {navLinks.map((link) => (
+          <nav aria-label={t.a11y.mobileNav}>
+            {t.nav.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}

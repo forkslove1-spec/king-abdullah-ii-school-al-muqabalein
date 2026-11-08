@@ -1,6 +1,7 @@
-# Deployment — Amman Crest Academy
+# Deployment — King Abdullah II School for Excellence – Al-Muqabalein
 
 Frontend-only static site (Vite + React). No backend, database, or authentication.
+Includes English / Arabic language switching with RTL layout.
 
 ## Production URL
 

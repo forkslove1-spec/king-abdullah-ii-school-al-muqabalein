@@ -1,15 +1,17 @@
-import { media, school, values } from '../data/content'
+import { media } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function About() {
+  const { t } = useLanguage()
+
   return (
     <>
       <section className="page-hero">
         <div className="container">
-          <p className="eyebrow">About</p>
-          <h1>A modern school with Ammani roots</h1>
+          <p className="eyebrow">{t.about.eyebrow}</p>
+          <h1>{t.about.title}</h1>
           <p>
-            {school.name} is an international day school serving families across Jordan and abroad.
-            We combine academic ambition with belonging, wellbeing, and civic responsibility.
+            {t.school.name} {t.about.intro}
           </p>
         </div>
       </section>
@@ -19,22 +21,16 @@ export function About() {
           <div className="media-frame">
             <img
               src={media.courtyard}
-              alt="School courtyard with trees and pathways"
+              alt={t.about.courtyardAlt}
               loading="lazy"
               decoding="async"
             />
           </div>
           <div className="panel">
-            <h3>Our mission</h3>
-            <p className="muted">
-              To educate confident, compassionate learners who think critically, communicate
-              clearly, and contribute meaningfully — in Amman and wherever life takes them.
-            </p>
-            <h3>Our community</h3>
-            <p className="muted">
-              Students represent 35+ nationalities. Teachers collaborate across disciplines.
-              Families are partners in every stage of the journey.
-            </p>
+            <h3>{t.about.missionTitle}</h3>
+            <p className="muted">{t.about.missionBody}</p>
+            <h3>{t.about.communityTitle}</h3>
+            <p className="muted">{t.about.communityBody}</p>
           </div>
         </div>
       </section>
@@ -42,11 +38,11 @@ export function About() {
       <section className="section-tight" style={{ paddingBottom: '4rem' }}>
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">Principles</p>
-            <h2>How we show up</h2>
+            <p className="eyebrow">{t.about.principlesEyebrow}</p>
+            <h2>{t.about.principlesTitle}</h2>
           </div>
           <div className="value-grid">
-            {values.map((value) => (
+            {t.values.map((value) => (
               <article key={value.title} className="value-card">
                 <h3>{value.title}</h3>
                 <p>{value.body}</p>

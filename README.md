@@ -1,12 +1,13 @@
-# Amman Crest Academy
+# King Abdullah II School for Excellence – Al-Muqabalein
 
 Frontend-only school website built with Vite + React + TypeScript.
+Full English / Arabic language switcher with RTL support.
 
 ## Live site
 
 **https://forkslove1-spec.github.io/amman-crest-academy/**
 
-Public HTTPS · no login · responsive across desktop and mobile · SPA section routes.
+Public HTTPS · no login · responsive across desktop and mobile · SPA section routes · EN/AR.
 
 ## Develop locally
 

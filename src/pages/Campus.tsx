@@ -1,16 +1,16 @@
 import { media } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function Campus() {
+  const { t } = useLanguage()
+
   return (
     <>
       <section className="page-hero">
         <div className="container">
-          <p className="eyebrow">Campus</p>
-          <h1>Spaces that invite energy</h1>
-          <p>
-            Learning commons, science labs, arts studios, and athletic fields — designed for Amman’s
-            climate and for students who learn by doing.
-          </p>
+          <p className="eyebrow">{t.campus.eyebrow}</p>
+          <h1>{t.campus.title}</h1>
+          <p>{t.campus.intro}</p>
         </div>
       </section>
 
@@ -19,30 +19,20 @@ export function Campus() {
           <div className="media-frame">
             <img
               src={media.building}
-              alt="Modern school building exterior"
+              alt={t.campus.buildingAlt}
               loading="lazy"
               decoding="async"
             />
           </div>
           <div className="panel">
-            <h3>Facilities</h3>
+            <h3>{t.campus.facilitiesTitle}</h3>
             <ul className="list-clean">
-              <li>
-                <strong>Learning commons</strong>
-                <span className="muted">Quiet zones, collaboration pods, and a digital library.</span>
-              </li>
-              <li>
-                <strong>Innovation labs</strong>
-                <span className="muted">Robotics, coding, and design workshops.</span>
-              </li>
-              <li>
-                <strong>Arts wing</strong>
-                <span className="muted">Music rehearsal rooms, gallery, and black-box theatre.</span>
-              </li>
-              <li>
-                <strong>Athletics</strong>
-                <span className="muted">Track, courts, and a multi-purpose sports hall.</span>
-              </li>
+              {t.campus.facilities.map((item) => (
+                <li key={item.title}>
+                  <strong>{item.title}</strong>
+                  <span className="muted">{item.body}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -52,14 +42,14 @@ export function Campus() {
         <div className="container">
           <div className="card-grid">
             <article className="program-card">
-              <span className="chip">Clubs</span>
-              <h3>40+ student-led activities</h3>
-              <p>Debate, Model UN, eco club, coding, journalism, and more.</p>
+              <span className="chip">{t.campus.clubsChip}</span>
+              <h3>{t.campus.clubsTitle}</h3>
+              <p>{t.campus.clubsBody}</p>
             </article>
             <article className="program-card">
-              <span className="chip">Wellbeing</span>
-              <h3>Counseling & pastoral care</h3>
-              <p>Dedicated mentors and counselors supporting every grade band.</p>
+              <span className="chip">{t.campus.wellbeingChip}</span>
+              <h3>{t.campus.wellbeingTitle}</h3>
+              <p>{t.campus.wellbeingBody}</p>
             </article>
           </div>
         </div>

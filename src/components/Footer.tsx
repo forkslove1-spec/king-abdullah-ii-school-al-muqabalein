@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom'
-import { navLinks, school } from '../data/content'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <div className="footer-brand">{school.name}</div>
-          <p>
-            An international day school in {school.city}, preparing students for university and life
-            with curiosity, character, and community.
-          </p>
+          <div className="footer-brand">{t.school.name}</div>
+          <p>{t.footer.blurb.replace('{city}', t.school.city)}</p>
         </div>
         <div>
-          <h3>Explore</h3>
+          <h3>{t.common.explore}</h3>
           <div style={{ display: 'grid', gap: '0.45rem' }}>
-            {navLinks.map((link) => (
+            {t.nav.map((link) => (
               <Link key={link.to} to={link.to}>
                 {link.label}
               </Link>
@@ -23,19 +22,21 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <h3>Visit</h3>
-          <p>{school.address}</p>
+          <h3>{t.common.visit}</h3>
+          <p>{t.school.address}</p>
           <p>
-            <a href={`tel:${school.phone.replace(/\s/g, '')}`}>{school.phone}</a>
+            <a href={`tel:${t.school.phone.replace(/\s/g, '')}`}>{t.school.phone}</a>
           </p>
           <p>
-            <a href={`mailto:${school.email}`}>{school.email}</a>
+            <a href={`mailto:${t.school.email}`}>{t.school.email}</a>
           </p>
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>© {new Date().getFullYear()} {school.name}. Frontend-only public website.</span>
-        <span>HTTPS · CDN · Globally accessible</span>
+        <span>
+          © {new Date().getFullYear()} {t.school.name}. {t.common.frontendOnly}
+        </span>
+        <span>{t.common.httpsNote}</span>
       </div>
     </footer>
   )

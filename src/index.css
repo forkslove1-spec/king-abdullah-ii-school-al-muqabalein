@@ -365,8 +365,8 @@ button {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(8, 20, 28, 0.78) 0%, rgba(8, 20, 28, 0.45) 48%, rgba(8, 20, 28, 0.28) 100%),
-    linear-gradient(180deg, rgba(8, 20, 28, 0.25) 0%, rgba(8, 20, 28, 0.55) 100%);
+    linear-gradient(90deg, rgba(8, 20, 28, 0.62) 0%, rgba(8, 20, 28, 0.32) 52%, rgba(8, 20, 28, 0.18) 100%),
+    linear-gradient(180deg, rgba(8, 20, 28, 0.12) 0%, rgba(8, 20, 28, 0.45) 100%);
   z-index: 1;
 }
 

@@ -30,18 +30,33 @@ export function HeroSlideshow() {
     const video = videoRef.current
     if (!video) return
 
+    let cancelled = false
+    const failTimer = window.setTimeout(() => {
+      if (!cancelled) setVideoBlocked(true)
+    }, 2500)
+
     const tryPlay = async () => {
       try {
         video.muted = true
         video.playsInline = true
         await video.play()
-        setVideoBlocked(false)
+        if (!cancelled) {
+          window.clearTimeout(failTimer)
+          setVideoBlocked(false)
+        }
       } catch {
-        setVideoBlocked(true)
+        if (!cancelled) {
+          window.clearTimeout(failTimer)
+          setVideoBlocked(true)
+        }
       }
     }
 
     void tryPlay()
+    return () => {
+      cancelled = true
+      window.clearTimeout(failTimer)
+    }
   }, [index])
 
   const playVideo = async () => {
@@ -70,6 +85,12 @@ export function HeroSlideshow() {
               />
             ) : (
               <>
+                <img
+                  src={slide.poster}
+                  alt=""
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
                 <video
                   ref={i === index ? videoRef : undefined}
                   src={slide.src}
@@ -78,6 +99,10 @@ export function HeroSlideshow() {
                   loop
                   playsInline
                   preload="metadata"
+                  style={{
+                    opacity: i === index && !videoBlocked ? 1 : 0,
+                    transition: 'opacity 0.4s ease',
+                  }}
                 />
                 {i === index && videoBlocked && !userPlayed ? (
                   <div className="video-fallback">

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { DashboardCards } from '../components/DashboardCards'
 import { HeroSlideshow } from '../components/HeroSlideshow'
-import { newsItems, school, values } from '../data/content'
+import { media, newsItems, school, values } from '../data/content'
 
 export function Home() {
   return (
@@ -32,7 +32,7 @@ export function Home() {
           </div>
           <div className="media-frame">
             <img
-              src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=80"
+              src={media.classroom}
               alt="Students collaborating around a classroom table"
               loading="lazy"
               decoding="async"

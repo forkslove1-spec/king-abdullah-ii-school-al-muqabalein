@@ -2,47 +2,60 @@
 
 Frontend-only static site (Vite + React). No backend, database, or authentication.
 
-## Production hosting
+## Production URL
 
-Supported platforms: **Vercel**, **Netlify**, or **Cloudflare Pages**.
+**Live HTTPS site:** https://forkslove1-spec.github.io/amman-crest-academy/
 
-### Vercel (recommended)
+- Public worldwide (including Jordan)
+- HTTPS enforced
+- No login required
+- Works on desktop, laptop, phone, and tablet browsers
+
+Source repository: https://github.com/forkslove1-spec/amman-crest-academy
+
+## Publish an update (current workflow)
+
+```bash
+npm install
+$env:VITE_BASE='/amman-crest-academy/'   # PowerShell
+npm run build
+Copy-Item dist\index.html dist\404.html  # SPA refresh fallback on GitHub Pages
+npx gh-pages -d dist
+```
+
+HTML is not long-cached by GitHub Pages; hashed files under `/assets/` are cache-friendly.
+
+## Vercel / Netlify / Cloudflare Pages
+
+The project is also ready for these platforms (`vercel.json`, `netlify.toml`, `public/_redirects`, cache headers).
+
+### Vercel
 
 ```bash
 npm install
 npm run build
+npx vercel login
 npx vercel --prod
 ```
 
-Or connect the GitHub repo in the Vercel dashboard — every push to `main` publishes automatically.
+For root hosting on Vercel, deploy **without** `VITE_BASE` (default `/`).
 
-`vercel.json` configures:
-
-- SPA fallback so refreshing `/about`, `/academics`, etc. works
-- `Cache-Control: max-age=0, must-revalidate` for HTML
-- Long-lived immutable caching for `/assets/*` (hashed filenames)
+Optional: claim a temporary Vercel deploy (if you still have the claim link from this session) at the Vercel claim-deployment page, then connect the GitHub repo for automatic updates.
 
 ### Netlify
 
 ```bash
 npm install
 npm run build
+npx netlify login
 npx netlify deploy --prod --dir=dist
 ```
-
-`netlify.toml` and `public/_redirects` provide the same SPA + cache behavior.
 
 ### Cloudflare Pages
 
 - Build command: `npm run build`
 - Output directory: `dist`
 - Framework preset: Vite
-
-Add a `_redirects` rule (already in `public/`):
-
-```
-/*    /index.html   200
-```
 
 ## Local development
 
@@ -51,17 +64,11 @@ npm install
 npm run dev
 ```
 
-## Update workflow
-
-1. Edit frontend files
-2. Commit and push (or redeploy with the CLI)
-3. CDN serves the new `index.html` immediately (not long-cached)
-4. Versioned JS/CSS assets remain cache-friendly
-
 ## Verification checklist
 
-- [ ] Open the HTTPS production URL from desktop and mobile
-- [ ] Refresh `/about`, `/admissions`, and other section routes
-- [ ] Confirm hero slideshow advances (~30s full loop)
-- [ ] Confirm video fallback button appears if autoplay is blocked
-- [ ] Confirm no login is required
+- [x] Public HTTPS URL opens without login
+- [x] Home page renders brand, slideshow controls, dashboard cards
+- [x] Direct section URLs work (SPA fallback via `404.html` on GitHub Pages)
+- [ ] Spot-check on a physical phone (Chrome/Safari)
+- [ ] Confirm slideshow advances (~30s full loop: 5 × 6s)
+- [ ] Confirm video “Play campus video” fallback if autoplay is blocked

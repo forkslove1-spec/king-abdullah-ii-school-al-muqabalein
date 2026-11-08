@@ -2,6 +2,8 @@ export type Slide =
   | { id: string; type: 'image'; src: string; alt: string; caption: string }
   | { id: string; type: 'video'; src: string; poster: string; alt: string; caption: string }
 
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+
 export const school = {
   name: 'Amman Crest Academy',
   shortName: 'Crest',
@@ -15,11 +17,23 @@ export const school = {
 /** Full slideshow loop ≈ 30s (5 slides × 6s). */
 export const SLIDE_MS = 6000
 
+export const media = {
+  campusDawn: asset('media/campus-dawn.jpg'),
+  campusLife: asset('media/campus-life.jpg'),
+  lab: asset('media/lab.jpg'),
+  arts: asset('media/arts.jpg'),
+  athletics: asset('media/athletics.jpg'),
+  classroom: asset('media/classroom.jpg'),
+  courtyard: asset('media/courtyard.jpg'),
+  family: asset('media/family.jpg'),
+  building: asset('media/building.jpg'),
+}
+
 export const slides: Slide[] = [
   {
     id: 'campus-dawn',
     type: 'image',
-    src: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1920&q=80',
+    src: media.campusDawn,
     alt: 'Modern campus buildings at sunrise',
     caption: 'A campus designed for discovery',
   },
@@ -27,29 +41,28 @@ export const slides: Slide[] = [
     id: 'campus-life',
     type: 'video',
     src: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-    poster:
-      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1920&q=80',
+    poster: media.campusLife,
     alt: 'Students walking across campus',
     caption: 'Everyday energy across our halls',
   },
   {
     id: 'lab',
     type: 'image',
-    src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80',
+    src: media.lab,
     alt: 'Students collaborating in a science lab',
     caption: 'Hands-on science and inquiry',
   },
   {
     id: 'arts',
     type: 'image',
-    src: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1920&q=80',
+    src: media.arts,
     alt: 'Creative arts studio with natural light',
     caption: 'Studios for makers and storytellers',
   },
   {
     id: 'athletics',
     type: 'image',
-    src: 'https://images.unsplash.com/photo-1461896836934-ffe607ba6851?auto=format&fit=crop&w=1920&q=80',
+    src: media.athletics,
     alt: 'Athletics on a sunlit field',
     caption: 'Sport, stamina, and team spirit',
   },

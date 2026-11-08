@@ -1,3 +1,5 @@
+import { media } from '../data/content'
+
 export function Campus() {
   return (
     <>
@@ -16,7 +18,7 @@ export function Campus() {
         <div className="container split">
           <div className="media-frame">
             <img
-              src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1400&q=80"
+              src={media.building}
               alt="Modern school building exterior"
               loading="lazy"
               decoding="async"

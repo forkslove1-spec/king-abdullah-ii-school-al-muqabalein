@@ -1,4 +1,4 @@
-import { school, values } from '../data/content'
+import { media, school, values } from '../data/content'
 
 export function About() {
   return (
@@ -18,7 +18,7 @@ export function About() {
         <div className="container split">
           <div className="media-frame">
             <img
-              src="https://images.unsplash.com/photo-1577896851231-70ef042ee041?auto=format&fit=crop&w=1400&q=80"
+              src={media.courtyard}
               alt="School courtyard with trees and pathways"
               loading="lazy"
               decoding="async"

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { media } from '../data/content'
 
 export function Admissions() {
   return (
@@ -44,7 +45,7 @@ export function Admissions() {
           </div>
           <div className="media-frame">
             <img
-              src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1400&q=80"
+              src={media.family}
               alt="Family walking through a bright school corridor"
               loading="lazy"
               decoding="async"

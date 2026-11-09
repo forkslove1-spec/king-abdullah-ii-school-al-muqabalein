@@ -1,4 +1,3 @@
-import { media } from '../data/content'
 import { useLanguage } from '../i18n/LanguageContext'
 
 export function About() {
@@ -20,7 +19,7 @@ export function About() {
         <div className="container split">
           <div className="media-frame">
             <img
-              src={media.courtyard}
+              src={`${import.meta.env.BASE_URL}media/school/opening.jpg`}
               alt={t.about.courtyardAlt}
               loading="lazy"
               decoding="async"

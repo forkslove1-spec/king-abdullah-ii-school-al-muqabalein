@@ -1,32 +1,37 @@
 /**
- * Real YouTube Live configuration (frontend-only).
+ * Facebook Live configuration (frontend-only).
  *
- * How broadcasting works:
- * 1. Create/use a YouTube channel with Live streaming enabled (YouTube Studio).
- * 2. Only authorized channel owners/managers can start a broadcast (phone app, tablet, or OBS/desktop).
- * 3. Paste your channel ID below (starts with "UC…"). Find it in YouTube Studio → Settings → Channel → Advanced.
- * 4. When you go live, this page embeds the channel’s current live stream automatically.
- * 5. Optional: set activeLiveVideoId to lock the embed to a specific live/premiere video ID.
+ * School page:
+ * https://www.facebook.com/100075648769222
+ * (share link: https://www.facebook.com/share/14ubdQ1BNHE/)
  *
- * Security: stream keys never belong in this repo. Keep Stream Key private inside YouTube Studio / OBS.
+ * While broadcasting on Facebook Live, paste the live video permalink into
+ * `activeLiveVideoUrl` (Share on the live video → Copy link), then redeploy.
+ * Leave it empty when offline — the page shows the elegant offline message.
+ *
+ * Never put Facebook passwords or access tokens in this repository.
  */
 export const liveStreamConfig = {
-  /** YouTube channel ID, e.g. "UCxxxxxxxxxxxxxxxxxxxxxx" */
-  youtubeChannelId: '',
-  /** Optional fixed live video ID (11 chars). Leave empty to use the channel live embed. */
-  activeLiveVideoId: '',
-  /** Public page title helpers */
-  provider: 'youtube' as const,
+  provider: 'facebook' as const,
+  facebookPageId: '100075648769222',
+  facebookPageUrl: 'https://www.facebook.com/100075648769222',
+  facebookShareUrl: 'https://www.facebook.com/share/14ubdQ1BNHE/',
+  /** Live video permalink from Facebook while the school is broadcasting. */
+  activeLiveVideoUrl: '',
 }
 
 export function getLiveEmbedSrc(): string | null {
-  const videoId = liveStreamConfig.activeLiveVideoId.trim()
-  if (videoId) {
-    return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0&modestbranding=1&playsinline=1`
-  }
-  const channelId = liveStreamConfig.youtubeChannelId.trim()
-  if (channelId) {
-    return `https://www.youtube-nocookie.com/embed/live_stream?channel=${encodeURIComponent(channelId)}&autoplay=1&rel=0&modestbranding=1&playsinline=1`
-  }
-  return null
+  const videoUrl = liveStreamConfig.activeLiveVideoUrl.trim()
+  if (!videoUrl) return null
+
+  const params = new URLSearchParams({
+    href: videoUrl,
+    show_text: 'false',
+    width: '1280',
+    height: '720',
+    autoplay: 'true',
+    allowfullscreen: 'true',
+  })
+
+  return `https://www.facebook.com/plugins/video.php?${params.toString()}`
 }

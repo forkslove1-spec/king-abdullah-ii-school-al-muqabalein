@@ -744,6 +744,23 @@ html[dir=ltr] .editorial-hero .scene-2 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.live-page-clean .live-hero-minimal {
+  padding-block: clamp(2.4rem, 6vw, 3.6rem) 0.35rem;
+}
+.live-page-clean .live-hero-minimal p,
+.live-page-clean .live-hero-minimal .eyebrow {
+  display: none;
+}
+.live-page-clean .live-hero-minimal h1 {
+  margin-bottom: 0;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+}
+.live-page-clean .live-stage-section {
+  padding-block: 1.2rem 4.5rem;
+}
+.live-page-clean .live-offline p {
+  max-width: 28rem;
+}
 .live-stage-section { padding-block: 0.5rem 4.5rem; }
 .live-stage {
   border-radius: 24px;

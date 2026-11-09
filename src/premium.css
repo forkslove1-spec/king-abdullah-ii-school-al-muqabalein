@@ -867,3 +867,256 @@ html[dir=ltr] .editorial-hero .scene-2 {
   }
 }
 
+/* Premium animated wave backdrop — inner pages only (homepage untouched). */
+@property --wave-deep {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #071526;
+}
+@property --wave-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #0d4a5c;
+}
+@property --wave-accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #c9a35a;
+}
+@property --wave-light {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #e8f6ff;
+}
+@property --wave-glow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #5ed7e8;
+}
+
+.inner-shell {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  --wave-deep: #071526;
+  --wave-mid: #0d4a5c;
+  --wave-accent: #c9a35a;
+  --wave-light: #e8f6ff;
+  --wave-glow: #5ed7e8;
+  transition:
+    --wave-deep 2.8s cubic-bezier(0.4, 0, 0.2, 1),
+    --wave-mid 2.8s cubic-bezier(0.4, 0, 0.2, 1),
+    --wave-accent 2.8s cubic-bezier(0.4, 0, 0.2, 1),
+    --wave-light 2.8s cubic-bezier(0.4, 0, 0.2, 1),
+    --wave-glow 2.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.inner-shell > .site-header,
+.inner-shell > .site-main,
+.inner-shell > .site-footer,
+.inner-shell > .skip-link {
+  position: relative;
+  z-index: 1;
+}
+.inner-shell .site-header {
+  background: color-mix(in srgb, #080e20 72%, transparent);
+}
+.inner-shell .page-hero {
+  background:
+    radial-gradient(ellipse at 12% 28%, color-mix(in srgb, var(--wave-glow, #5ed7e8) 22%, transparent), transparent 58%),
+    radial-gradient(ellipse at 88% 8%, color-mix(in srgb, var(--wave-accent, #c9a35a) 16%, transparent), transparent 52%),
+    color-mix(in srgb, #0b142a 58%, transparent);
+}
+.inner-shell .history-section,
+.inner-shell .legacy-quote {
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, #12203b 78%, transparent),
+    color-mix(in srgb, #14182f 72%, transparent) 65%,
+    color-mix(in srgb, #1b1735 78%, transparent)
+  );
+}
+.inner-shell .achievement-section {
+  background: color-mix(in srgb, #090f21 72%, transparent);
+}
+.inner-shell .site-footer {
+  background: color-mix(in srgb, #050a16 82%, transparent);
+}
+.inner-shell .panel,
+.inner-shell .value-card,
+.inner-shell .program-card,
+.inner-shell .star-card,
+.inner-shell .live-stage {
+  backdrop-filter: blur(10px);
+}
+
+.wave-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: paint;
+}
+.wave-base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 18% 12%, color-mix(in srgb, var(--wave-glow) 34%, transparent), transparent 58%),
+    radial-gradient(ellipse 80% 60% at 86% 78%, color-mix(in srgb, var(--wave-accent) 28%, transparent), transparent 55%),
+    radial-gradient(ellipse 70% 55% at 55% 45%, color-mix(in srgb, var(--wave-mid) 45%, transparent), transparent 62%),
+    linear-gradient(160deg, var(--wave-deep) 0%, color-mix(in srgb, var(--wave-mid) 55%, var(--wave-deep)) 48%, var(--wave-deep) 100%);
+}
+.wave-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.wave-glow-a {
+  width: min(58vw, 680px);
+  height: min(58vw, 680px);
+  top: -12%;
+  inset-inline-start: -8%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--wave-glow) 75%, transparent), transparent 70%);
+  animation: wave-orb-a 22s ease-in-out infinite alternate;
+}
+.wave-glow-b {
+  width: min(48vw, 560px);
+  height: min(48vw, 560px);
+  bottom: -8%;
+  inset-inline-end: -6%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--wave-accent) 65%, transparent), transparent 70%);
+  animation: wave-orb-b 26s ease-in-out infinite alternate;
+}
+.wave-glow-c {
+  width: min(42vw, 480px);
+  height: min(42vw, 480px);
+  top: 38%;
+  inset-inline-start: 42%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--wave-mid) 70%, transparent), transparent 72%);
+  opacity: 0.32;
+  animation: wave-orb-c 19s ease-in-out infinite alternate;
+}
+.wave-sheen {
+  position: absolute;
+  inset: -20% -30%;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    color-mix(in srgb, var(--wave-light) 10%, transparent) 42%,
+    color-mix(in srgb, var(--wave-glow) 14%, transparent) 50%,
+    color-mix(in srgb, var(--wave-light) 8%, transparent) 58%,
+    transparent 78%
+  );
+  opacity: 0.55;
+  animation: wave-sheen-drift 14s ease-in-out infinite alternate;
+}
+.wave-band {
+  position: absolute;
+  inset-inline: -50%;
+  width: 200%;
+  display: flex;
+  will-change: transform;
+}
+.wave-band svg {
+  width: 50%;
+  height: 100%;
+  display: block;
+  flex: 0 0 50%;
+}
+.wave-band-1 {
+  bottom: 0;
+  height: clamp(180px, 28vh, 320px);
+  opacity: 0.55;
+  animation: wave-flow-ltr 18s linear infinite;
+}
+.wave-band-2 {
+  bottom: 4%;
+  height: clamp(160px, 24vh, 280px);
+  opacity: 0.42;
+  animation: wave-flow-rtl 24s linear infinite;
+}
+.wave-band-3 {
+  bottom: 10%;
+  height: clamp(140px, 20vh, 240px);
+  opacity: 0.28;
+  animation: wave-flow-ltr 30s linear infinite;
+}
+.wave-path-fill {
+  fill: color-mix(in srgb, var(--wave-mid) 55%, var(--wave-deep));
+}
+.wave-path-mid {
+  fill: color-mix(in srgb, var(--wave-glow) 35%, var(--wave-mid));
+}
+.wave-path-crest {
+  fill: color-mix(in srgb, var(--wave-accent) 28%, var(--wave-deep));
+}
+.wave-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--wave-deep) 55%, transparent) 0%, transparent 28%, transparent 62%, color-mix(in srgb, var(--wave-deep) 70%, transparent) 100%),
+    color-mix(in srgb, var(--wave-deep) 22%, transparent);
+}
+.wave-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 35%, color-mix(in srgb, #02060f 55%, transparent) 100%);
+}
+
+@keyframes wave-flow-ltr {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes wave-flow-rtl {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+@keyframes wave-orb-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(12%, 18%, 0) scale(1.18); }
+}
+@keyframes wave-orb-b {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to { transform: translate3d(-14%, -12%, 0) scale(0.92); }
+}
+@keyframes wave-orb-c {
+  from { transform: translate3d(-6%, 4%, 0) scale(0.95); }
+  to { transform: translate3d(10%, -10%, 0) scale(1.2); }
+}
+@keyframes wave-sheen-drift {
+  from { transform: translate3d(-4%, 0, 0) rotate(0.5deg); }
+  to { transform: translate3d(6%, 3%, 0) rotate(-1deg); }
+}
+
+@media (max-width: 919px) {
+  .wave-glow { filter: blur(56px); opacity: 0.34; }
+  .wave-band-1 { height: clamp(140px, 24vh, 220px); }
+  .wave-band-2 { height: clamp(120px, 20vh, 190px); }
+  .wave-band-3 { height: clamp(100px, 16vh, 160px); opacity: 0.22; }
+}
+@media (max-width: 640px) {
+  .wave-glow-c { display: none; }
+  .wave-sheen { opacity: 0.35; }
+  .wave-band-3 { display: none; }
+  .inner-shell .panel,
+  .inner-shell .value-card,
+  .inner-shell .program-card,
+  .inner-shell .star-card,
+  .inner-shell .live-stage {
+    backdrop-filter: blur(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-glow,
+  .wave-sheen,
+  .wave-band {
+    animation: none !important;
+  }
+  .inner-shell {
+    transition: none !important;
+  }
+}
+

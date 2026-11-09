@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef } from 'react'
 
 type WavePalette = {
   deep: string
@@ -70,37 +70,44 @@ const WAVE_PALETTES: WavePalette[] = [
 
 const CYCLE_MS = 5000
 
-export function useWavePaletteStyle(): CSSProperties {
-  const [index, setIndex] = useState(0)
-  const palette = WAVE_PALETTES[index]
+function applyPalette(node: HTMLElement, palette: WavePalette) {
+  node.style.setProperty('--wave-deep', palette.deep)
+  node.style.setProperty('--wave-mid', palette.mid)
+  node.style.setProperty('--wave-accent', palette.accent)
+  node.style.setProperty('--wave-light', palette.light)
+  node.style.setProperty('--wave-glow', palette.glow)
+}
+
+export function WaveBackground() {
+  const stageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+
+    const shell = stage.closest('.inner-shell') as HTMLElement | null
+    const targets = [stage, shell].filter(Boolean) as HTMLElement[]
+    let index = 0
+
+    for (const target of targets) applyPalette(target, WAVE_PALETTES[0])
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion) return
 
     const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % WAVE_PALETTES.length)
+      index = (index + 1) % WAVE_PALETTES.length
+      const palette = WAVE_PALETTES[index]
+      for (const target of targets) applyPalette(target, palette)
     }, CYCLE_MS)
 
     return () => window.clearInterval(id)
   }, [])
 
-  return {
-    '--wave-deep': palette.deep,
-    '--wave-mid': palette.mid,
-    '--wave-accent': palette.accent,
-    '--wave-light': palette.light,
-    '--wave-glow': palette.glow,
-  } as CSSProperties
-}
-
-export function WaveBackground() {
   return (
-    <div className="wave-stage" aria-hidden="true">
+    <div className="wave-stage" ref={stageRef} aria-hidden="true">
       <div className="wave-base" />
       <div className="wave-glow wave-glow-a" />
       <div className="wave-glow wave-glow-b" />
-      <div className="wave-glow wave-glow-c" />
       <div className="wave-sheen" />
 
       <div className="wave-band wave-band-1">
@@ -129,21 +136,6 @@ export function WaveBackground() {
           <path
             className="wave-path-mid"
             d="M0,140 C220,60 380,210 560,130 C760,40 940,210 1120,130 C1280,70 1380,170 1440,130 L1440,240 L0,240 Z"
-          />
-        </svg>
-      </div>
-
-      <div className="wave-band wave-band-3">
-        <svg viewBox="0 0 1440 260" preserveAspectRatio="none" focusable="false">
-          <path
-            className="wave-path-crest"
-            d="M0,150 C200,80 340,220 520,150 C700,80 880,220 1060,140 C1240,70 1360,180 1440,140 L1440,260 L0,260 Z"
-          />
-        </svg>
-        <svg viewBox="0 0 1440 260" preserveAspectRatio="none" focusable="false">
-          <path
-            className="wave-path-crest"
-            d="M0,150 C200,80 340,220 520,150 C700,80 880,220 1060,140 C1240,70 1360,180 1440,140 L1440,260 L0,260 Z"
           />
         </svg>
       </div>
